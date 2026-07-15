@@ -15,7 +15,7 @@ const source = join(temp, 'source');
 const stage = join(temp, 'plugin');
 const run = (cmd, args, cwd) => execFileSync(cmd, args, { cwd, encoding: 'utf8' }).trim();
 try {
-  run('git', ['clone', '--no-checkout', lock.repository, source]);
+  run('git', ['-c', 'core.autocrlf=false', 'clone', '--no-checkout', lock.repository, source]);
   if (updateTag) {
     run('git', ['checkout', '--detach', updateTag], source);
     const commit = run('git', ['rev-parse', 'HEAD'], source);
