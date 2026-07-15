@@ -31,3 +31,7 @@ Observed current Codex transcript envelopes contain no supported token-usage cou
 ## 2026-07-15 — current CLI evidence
 
 NPM’s official `@openai/codex` latest tag resolved to `0.144.4`. An isolated `CODEX_HOME` successfully added the local marketplace, listed the plugin, installed it, and removed it. The installed `0.144.2` remains the minimum-version evidence.
+
+## 2026-07-15 — local release evidence
+
+`npm test`, `npm run test:upstream`, `npm audit --omit=dev`, secret-pattern scanning, and `npm run release:dry-run` pass. The current deterministic local ZIP hash is recorded only as run evidence; the approval-gated GitHub release will produce the authoritative attestation and checksums.

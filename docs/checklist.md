@@ -10,6 +10,7 @@
 - [x] Isolated local marketplace install, migration apply/backup, and rollback documentation.
 - [x] Isolated project and personal local-marketplace install/remove flows.
 - [x] CI, synchronization, release automation, and static security gates.
+- [x] Final local adapter, upstream, license, audit, secret-pattern, and release dry-run gates.
 - [x] User, maintainer, reference, examples, migration, troubleshooting, release, rollback, and threat-model documentation.
 - [ ] Cross-platform Desktop acceptance evidence.
 - [ ] Approval-gated remote repository, PR, public visibility, and release.
