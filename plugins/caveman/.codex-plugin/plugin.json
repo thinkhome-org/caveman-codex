@@ -2,11 +2,19 @@
   "name": "caveman",
   "version": "1.0.0",
   "description": "ThinkHome Caveman for Codex: concise, accurate Caveman workflows.",
-  "author": { "name": "ThinkHome", "url": "https://github.com/thinkhome-org" },
+  "author": {
+    "name": "ThinkHome",
+    "url": "https://github.com/thinkhome-org"
+  },
   "homepage": "https://github.com/thinkhome-org/caveman-codex",
   "repository": "https://github.com/thinkhome-org/caveman-codex",
   "license": "MIT",
-  "keywords": ["caveman", "brevity", "productivity", "codex"],
+  "keywords": [
+    "caveman",
+    "brevity",
+    "productivity",
+    "codex"
+  ],
   "skills": "./skills/",
   "hooks": "./hooks/hooks.json",
   "interface": {
@@ -15,11 +23,18 @@
     "longDescription": "Native Codex adapter for Caveman by Julius Brussee. No telemetry.",
     "developerName": "ThinkHome",
     "category": "Productivity",
-    "capabilities": ["Read", "Write"],
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
     "websiteURL": "https://github.com/thinkhome-org/caveman-codex",
     "privacyPolicyURL": "https://github.com/thinkhome-org/caveman-codex/blob/main/README.md",
     "termsOfServiceURL": "https://github.com/thinkhome-org/caveman-codex/blob/main/LICENSE",
-    "defaultPrompt": ["Use $caveman full. Keep technical accuracy."],
-    "brandColor": "#6B7280"
+    "defaultPrompt": [
+      "Use $caveman full. Keep technical accuracy."
+    ],
+    "brandColor": "#6B7280",
+    "composerIcon": "./assets/caveman-small.svg",
+    "logo": "./assets/caveman.svg"
   }
 }

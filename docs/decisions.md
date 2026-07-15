@@ -27,3 +27,7 @@ The lock records every imported SHA-256. The generator rejects source symlinks, 
 ## 2026-07-15 — stats fallback
 
 Observed current Codex transcript envelopes contain no supported token-usage counters. `$caveman-stats` therefore explicitly reports exact stats unavailable; it never estimates. A future documented schema requires fixtures before support is added.
+
+## 2026-07-15 — current CLI evidence
+
+NPM’s official `@openai/codex` latest tag resolved to `0.144.4`. An isolated `CODEX_HOME` successfully added the local marketplace, listed the plugin, installed it, and removed it. The installed `0.144.2` remains the minimum-version evidence.

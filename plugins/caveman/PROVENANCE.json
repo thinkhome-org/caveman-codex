@@ -37,13 +37,17 @@
     "src/mcp-servers/caveman-shrink/compress.js": "5997502d65e6d8b077a92f6efab4879ebc35c78e1ad8ba8bfd5ea52e9de5f294",
     "src/mcp-servers/caveman-shrink/index.js": "31b30cd109ca9b78a03872a0225444f57af39495919dbc0f89a2022db23c8058",
     "src/mcp-servers/caveman-shrink/package.json": "aa51d09d8f18b63aaa019f821c9ba031910bf56211647bec4962a37c744c6107",
-    "src/mcp-servers/caveman-shrink/spawn-options.js": "3ffaec07d9c20aacdbda91ae65151d12feb36b0bf81f220627c918acb7320713"
+    "src/mcp-servers/caveman-shrink/spawn-options.js": "3ffaec07d9c20aacdbda91ae65151d12feb36b0bf81f220627c918acb7320713",
+    "plugins/caveman/assets/caveman-small.svg": "1c8f55516541b6094cb20ceabb50ff89b01d1acafaae84487e53739deebcbb1f",
+    "plugins/caveman/assets/caveman.svg": "8024fa96dce034675eb5610139e75f6d2b5db3b4cb3df3090adb8a2b2a285595"
   },
   "generatedFiles": {
-    ".codex-plugin/plugin.json": "8e244966f6ace89bea18efe4e7231e15f372df61e5d2999bb94f19330bd17839",
+    ".codex-plugin/plugin.json": "d3f7180932261e5fce53fefc0715ea81a636c216dcead67296493b1a2fb10dd0",
     "PARITY.json": "dfa05c9364afb54679c6cb7bcd697aca1a25e90d3426712e85c2d9eb0c558c37",
     "PARITY.md": "57eacd8c83776c4f2cd5c732f9b93dd1de9e15a23e44d08b473e59bb365cdf6c",
     "UPSTREAM_LICENSE": "5eb826cd03151bcc7cce3f80d40e87733237fedfc6c36d6908aca5fd650a0bdb",
+    "assets/caveman-small.svg": "1c8f55516541b6094cb20ceabb50ff89b01d1acafaae84487e53739deebcbb1f",
+    "assets/caveman.svg": "8024fa96dce034675eb5610139e75f6d2b5db3b4cb3df3090adb8a2b2a285595",
     "hooks/caveman-hook.mjs": "dc87d81c720ced4c2310898a3cfb5780a449258aff2f2d6f5dfd0d0ec59d5fef",
     "hooks/hooks.json": "27a0b6dbbf753e3193a13c83afd8bb3e33c7fef053429692c610c691bba1fc1d",
     "skills/cavecrew/README.md": "e13d08785f72d305de1ac1fa9a49c349332bb4e2f6a24a06efd20144c36c4dc9",

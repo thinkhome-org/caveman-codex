@@ -1,6 +1,6 @@
 {
   "name": "caveman",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "ThinkHome Caveman for Codex: concise, accurate Caveman workflows.",
   "author": { "name": "ThinkHome", "url": "https://github.com/thinkhome-org" },
   "homepage": "https://github.com/thinkhome-org/caveman-codex",
@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://github.com/thinkhome-org/caveman-codex/blob/main/README.md",
     "termsOfServiceURL": "https://github.com/thinkhome-org/caveman-codex/blob/main/LICENSE",
     "defaultPrompt": ["Use $caveman full. Keep technical accuracy."],
-    "brandColor": "#6B7280"
+    "brandColor": "#6B7280",
+    "composerIcon": "./assets/caveman-small.svg",
+    "logo": "./assets/caveman.svg"
   }
 }

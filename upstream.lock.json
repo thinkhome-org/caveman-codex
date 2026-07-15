@@ -3,7 +3,7 @@
   "tag": "v1.9.1",
   "commit": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
   "tree": "867418a8efea2c92b3885b8efd99d73d7c58af11",
-  "synchronizedAt": "2026-07-15T00:00:00.000Z",
+  "synchronizedAt": "2026-07-15T16:01:58.601Z",
   "generatorVersion": 1,
   "paths": [
     "LICENSE",
@@ -17,7 +17,8 @@
     "agents/cavecrew-investigator.md",
     "agents/cavecrew-builder.md",
     "agents/cavecrew-reviewer.md",
-    "src/mcp-servers/caveman-shrink"
+    "src/mcp-servers/caveman-shrink",
+    "plugins/caveman/assets"
   ],
   "importedFiles": {
     "LICENSE": "5eb826cd03151bcc7cce3f80d40e87733237fedfc6c36d6908aca5fd650a0bdb",
@@ -50,6 +51,8 @@
     "src/mcp-servers/caveman-shrink/compress.js": "5997502d65e6d8b077a92f6efab4879ebc35c78e1ad8ba8bfd5ea52e9de5f294",
     "src/mcp-servers/caveman-shrink/index.js": "31b30cd109ca9b78a03872a0225444f57af39495919dbc0f89a2022db23c8058",
     "src/mcp-servers/caveman-shrink/package.json": "aa51d09d8f18b63aaa019f821c9ba031910bf56211647bec4962a37c744c6107",
-    "src/mcp-servers/caveman-shrink/spawn-options.js": "3ffaec07d9c20aacdbda91ae65151d12feb36b0bf81f220627c918acb7320713"
+    "src/mcp-servers/caveman-shrink/spawn-options.js": "3ffaec07d9c20aacdbda91ae65151d12feb36b0bf81f220627c918acb7320713",
+    "plugins/caveman/assets/caveman-small.svg": "1c8f55516541b6094cb20ceabb50ff89b01d1acafaae84487e53739deebcbb1f",
+    "plugins/caveman/assets/caveman.svg": "8024fa96dce034675eb5610139e75f6d2b5db3b4cb3df3090adb8a2b2a285595"
   }
 }

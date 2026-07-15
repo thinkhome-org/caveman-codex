@@ -26,7 +26,9 @@ try {
   if (run('git', ['rev-parse', 'HEAD^{tree}'], source) !== lock.tree) throw new Error('upstream tree mismatch');
   if (run('git', ['rev-list', '-n', '1', lock.tag], source) !== lock.commit) throw new Error('tag does not resolve to locked commit');
   await mkdir(stage, { recursive: true });
-  await cp(join(root, 'integration/codex/plugin.json'), join(stage, '.codex-plugin/plugin.json'), { recursive: true });
+  const manifest = await json(join(root, 'integration/codex/plugin.json'));
+  manifest.version = (await json(join(root, 'package.json'))).version;
+  await writeJson(join(stage, '.codex-plugin/plugin.json'), manifest);
   await cp(join(root, 'integration/codex/hooks.json'), join(stage, 'hooks/hooks.json'), { recursive: true });
   await cp(join(root, 'integration/codex/caveman-hook.mjs'), join(stage, 'hooks/caveman-hook.mjs'));
   await cp(join(root, 'tools/migrate-yibie.mjs'), join(stage, 'tools/migrate-yibie.mjs'));
@@ -35,7 +37,7 @@ try {
   for (const path of lock.paths) {
     const from = join(source, path);
     if ((await lstat(from)).isSymbolicLink()) throw new Error(`refusing symlinked source path: ${path}`);
-    const to = path === 'LICENSE' ? join(stage, 'UPSTREAM_LICENSE') : path.startsWith('skills/') ? join(stage, path) : join(stage, 'upstream', path);
+    const to = path === 'LICENSE' ? join(stage, 'UPSTREAM_LICENSE') : path.startsWith('skills/') ? join(stage, path) : path.startsWith('plugins/caveman/') ? join(stage, path.slice('plugins/caveman/'.length)) : join(stage, 'upstream', path);
     await cp(from, to, { recursive: true });
   }
   const imported = {};
