@@ -8,7 +8,6 @@
   "license": "MIT",
   "keywords": ["caveman", "brevity", "productivity", "codex"],
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "ThinkHome Caveman for Codex",
     "shortDescription": "Caveman workflows, native Codex packaging.",
@@ -17,9 +16,13 @@
     "category": "Productivity",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://github.com/thinkhome-org/caveman-codex",
-    "privacyPolicyURL": "https://github.com/thinkhome-org/caveman-codex/blob/main/README.md",
+    "privacyPolicyURL": "https://github.com/thinkhome-org/caveman-codex/blob/main/PRIVACY.md",
     "termsOfServiceURL": "https://github.com/thinkhome-org/caveman-codex/blob/main/LICENSE",
-    "defaultPrompt": ["Use $caveman full. Keep technical accuracy."],
+    "defaultPrompt": [
+      "Use $caveman full. Keep technical accuracy.",
+      "Use $caveman-review on my current changes.",
+      "Use $caveman-compress on a Markdown file safely."
+    ],
     "brandColor": "#6B7280",
     "composerIcon": "./assets/caveman-small.svg",
     "logo": "./assets/caveman.svg"

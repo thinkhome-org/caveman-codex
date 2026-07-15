@@ -9,7 +9,7 @@
 | `$caveman-stats` | Exact usage only when Codex exposes a supported schema; otherwise says unavailable. |
 | `$caveman-compress` | Upstream safe Markdown compression with backups and validation. |
 | `$cavecrew` | Maps investigator, builder, and reviewer contracts to Codex multi-agent work. |
-| `$caveman-init` | Configuration guidance. |
+| `$caveman-init` | Dry-run-first project rule installation using the pinned upstream tool. |
 | `$caveman-migrate` | Dry-run-first yibie migration. |
 
 Say `stop caveman` or `normal mode` to turn the current mode off. Custom distributable slash prompts are deliberately not used because Codex treats them as local/deprecated customization.

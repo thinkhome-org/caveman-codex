@@ -10,9 +10,9 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with: { fetch-depth: 0, persist-credentials: true }
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with: { node-version: 20 }
       - id: version
         run: |
@@ -24,12 +24,24 @@ jobs:
       - if: steps.version.outputs.tag != steps.current.outputs.tag
         run: |
           branch="codex/upstream-${{ steps.version.outputs.tag }}"
+          if [ "$(gh pr list --head "$branch" --state open --json number --jq length)" -gt 0 ]; then
+            echo "Open upstream update PR already exists for $branch"
+            exit 0
+          fi
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then
+            gh pr create --draft --head "$branch" --base main --title "chore(upstream): sync caveman ${{ steps.version.outputs.tag }}" --body "Automated pinned upstream update. Review generated provenance, parity changes, and release notes before merging."
+            exit 0
+          fi
           git switch -c "$branch"
           node scripts/sync-upstream.mjs --update "${{ steps.version.outputs.tag }}"
           npm ci --ignore-scripts
           npm test
           npm run test:upstream
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add upstream.lock.json plugins/caveman
           git commit -m "chore(upstream): sync caveman ${{ steps.version.outputs.tag }}"
           git push --set-upstream origin "$branch"
-          gh pr create --draft --base main --title "chore(upstream): sync caveman ${{ steps.version.outputs.tag }}" --body "Automated pinned upstream update. Review generated provenance, parity changes, and release notes before merging."
+          gh pr create --draft --head "$branch" --base main --title "chore(upstream): sync caveman ${{ steps.version.outputs.tag }}" --body "Automated pinned upstream update. Review generated provenance, parity changes, and release notes before merging."
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -19,6 +19,7 @@
     "agents/cavecrew-investigator.md",
     "agents/cavecrew-reviewer.md"
   ],
+  "init": true,
   "mcpShrink": true,
   "manualReview": [
     "Review upstream release notes and changed imported hashes before merging.",

@@ -52,18 +52,19 @@ try {
   for (const path of lock.paths) {
     const from = join(source, path);
     if ((await lstat(from)).isSymbolicLink()) throw new Error(`refusing symlinked source path: ${path}`);
-    const to = path === 'LICENSE' ? join(stage, 'UPSTREAM_LICENSE') : path.startsWith('skills/') ? join(stage, path) : path.startsWith('plugins/caveman/') ? join(stage, path.slice('plugins/caveman/'.length)) : join(stage, 'upstream', path);
+    const to = path === 'LICENSE' ? join(stage, 'UPSTREAM_LICENSE') : path === 'skills' || path.startsWith('skills/') ? join(stage, path) : path.startsWith('plugins/caveman/') ? join(stage, path.slice('plugins/caveman/'.length)) : join(stage, 'upstream', path);
     await cp(from, to, { recursive: true });
   }
+  await writeJson(join(stage, 'upstream/package.json'), { private: true, type: 'commonjs' });
   const hashChanges = lock.importedFiles ? [...new Set([...Object.keys(lock.importedFiles), ...Object.keys(imported)])]
     .filter(path => lock.importedFiles[path] !== imported[path])
     .sort() : [];
   if (!updateTag && hashChanges.length) throw new Error(`locked upstream file hashes differ: ${hashChanges.join(', ')}`);
   lock = { ...lock, importedFiles: imported };
   const skills = Object.keys(imported).filter(path => path.endsWith('/SKILL.md')).map(path => path.split('/')[1]).sort();
-  const parity = { generated: true, upstream: { tag: lock.tag, commit: lock.commit, tree: lock.tree }, skills, cavecrewAgents: Object.keys(imported).filter(path => path.startsWith('agents/')).sort(), mcpShrink: Object.keys(imported).some(path => path.startsWith('src/mcp-servers/caveman-shrink/')), manualReview: ['Review upstream release notes and changed imported hashes before merging.', 'Do not enable MCP shrink automatically.'] };
+  const parity = { generated: true, upstream: { tag: lock.tag, commit: lock.commit, tree: lock.tree }, skills, cavecrewAgents: Object.keys(imported).filter(path => path.startsWith('agents/')).sort(), init: Object.hasOwn(imported, 'src/tools/caveman-init.js'), mcpShrink: Object.keys(imported).some(path => path.startsWith('src/mcp-servers/caveman-shrink/')), manualReview: ['Review upstream release notes and changed imported hashes before merging.', 'Do not enable MCP shrink automatically.'] };
   await writeJson(join(stage, 'PARITY.json'), parity);
-  await writeFile(join(stage, 'PARITY.md'), `# Upstream parity\n\n- Upstream: ${lock.tag} (${lock.commit})\n- Skills: ${skills.map(skill => `$${skill}`).join(', ')}\n- Cavecrew agents: ${parity.cavecrewAgents.length}\n- MCP shrink: ${parity.mcpShrink ? 'packaged, opt-in' : 'not packaged'}\n\n## Manual review\n\n${parity.manualReview.map(item => `- ${item}`).join('\n')}\n`);
+  await writeFile(join(stage, 'PARITY.md'), `# Upstream parity\n\n- Upstream: ${lock.tag} (${lock.commit})\n- Skills: ${skills.map(skill => `$${skill}`).join(', ')}\n- Cavecrew agents: ${parity.cavecrewAgents.length}\n- Init: ${parity.init ? 'packaged' : 'not packaged'}\n- MCP shrink: ${parity.mcpShrink ? 'packaged, opt-in' : 'not packaged'}\n\n## Manual review\n\n${parity.manualReview.map(item => `- ${item}`).join('\n')}\n`);
   await writeJson(join(stage, 'PROVENANCE.json'), { generated: true, upstream: { repository: lock.repository, tag: lock.tag, commit: lock.commit, tree: lock.tree }, imported, generatedFiles: await hashTree(stage) });
   const current = join(root, 'plugins/caveman');
   if (check) {

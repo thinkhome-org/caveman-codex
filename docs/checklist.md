@@ -14,4 +14,6 @@
 - [x] Final local adapter, upstream, license, audit, secret-pattern, and release dry-run gates.
 - [x] User, maintainer, reference, examples, migration, troubleshooting, release, rollback, and threat-model documentation.
 - [ ] Cross-platform Desktop acceptance evidence.
-- [ ] Approval-gated remote repository, PR, public visibility, and release.
+- [x] Public remote repository, protected PR flow, and Git marketplace installation.
+- [ ] Tagged GitHub release.
+- [ ] Official Plugins Directory submission.

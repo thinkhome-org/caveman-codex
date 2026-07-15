@@ -9,7 +9,7 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with: { persist-credentials: false }
       - run: npm audit --omit=dev
       - run: git grep -nEI 'BEGIN (RSA|OPENSSH)|sk-[A-Za-z0-9]|gh[pous]_[A-Za-z0-9]' || true
@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: { security-events: write, contents: read }
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with: { persist-credentials: false }
-      - uses: github/codeql-action/init@1ad29ea4a422cce9a242a9fae469541dcd08addc
+      - uses: github/codeql-action/init@1ad29ea4a422cce9a242a9fae469541dcd08addc # v4
         with: { languages: javascript }
-      - uses: github/codeql-action/analyze@1ad29ea4a422cce9a242a9fae469541dcd08addc
+      - uses: github/codeql-action/analyze@1ad29ea4a422cce9a242a9fae469541dcd08addc # v4

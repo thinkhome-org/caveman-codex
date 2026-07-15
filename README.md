@@ -13,6 +13,6 @@ codex plugin add caveman@thinkhome-caveman
 
 Use `$caveman`, `$caveman-commit`, `$caveman-review`, `$caveman-compress`, or `$cavecrew`. Hooks are optional and require trust; manual skills work without them.
 
-See [installation](docs/installation.md), [configuration](docs/configuration.md), [reference](docs/reference.md), [migration](docs/migration.md), and [rollback](docs/rollback.md).
+See [installation](docs/installation.md), [configuration](docs/configuration.md), [reference](docs/reference.md), [migration](docs/migration.md), [support](SUPPORT.md), [privacy](PRIVACY.md), and [rollback](docs/rollback.md).
 
 Issues and pull requests are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). ThinkHome-authored code is MIT licensed, while imported Caveman files retain their upstream attribution in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
