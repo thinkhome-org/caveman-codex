@@ -7,9 +7,10 @@ const marketplace = JSON.parse(await readFile(join(root, '.agents/plugins/market
 const hooks = JSON.parse(await readFile(join(plugin, 'hooks/hooks.json'), 'utf8'));
 const parity = JSON.parse(await readFile(join(plugin, 'PARITY.json'), 'utf8'));
 const required = ['caveman', 'caveman-commit', 'caveman-review', 'caveman-help', 'caveman-stats', 'caveman-compress', 'cavecrew', 'caveman-init', 'caveman-migrate'];
-if (manifest.name !== 'caveman' || manifest.version !== '1.0.0' || manifest.skills !== './skills/' || manifest.hooks !== './hooks/hooks.json' || !manifest.interface?.logo || !manifest.interface?.composerIcon) throw new Error('invalid plugin manifest');
+if (manifest.name !== 'caveman' || manifest.version !== '1.0.0' || manifest.skills !== './skills/' || manifest.hooks !== undefined || !manifest.interface?.logo || !manifest.interface?.composerIcon) throw new Error('invalid plugin manifest');
+if (!manifest.interface.privacyPolicyURL.endsWith('/PRIVACY.md') || manifest.interface.defaultPrompt?.length !== 3 || manifest.interface.defaultPrompt.some(prompt => prompt.length > 128)) throw new Error('invalid public plugin metadata');
 if (marketplace.name !== 'thinkhome-caveman' || marketplace.plugins?.[0]?.source?.path !== './plugins/caveman') throw new Error('invalid marketplace');
 for (const event of ['SessionStart', 'UserPromptSubmit', 'SubagentStart']) if (!hooks.hooks?.[event]?.[0]?.hooks?.[0]?.commandWindows) throw new Error(`missing cross-platform ${event} hook`);
 for (const skill of required) await readFile(join(plugin, 'skills', skill, 'SKILL.md'), 'utf8');
-if (parity.upstream?.tag !== 'v1.9.1' || parity.skills.length !== 7 || !parity.mcpShrink) throw new Error('invalid parity report');
+if (parity.upstream?.tag !== 'v1.9.1' || parity.skills.length !== 7 || !parity.init || !parity.mcpShrink) throw new Error('invalid parity report');
 console.log(`plugin valid: ${required.length} skills`);
