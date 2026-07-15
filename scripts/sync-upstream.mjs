@@ -16,6 +16,8 @@ const stage = join(temp, 'plugin');
 const run = (cmd, args, cwd) => execFileSync(cmd, args, { cwd, encoding: 'utf8' }).trim();
 try {
   run('git', ['-c', 'core.autocrlf=false', 'clone', '--no-checkout', lock.repository, source]);
+  // Clone options do not necessarily govern a later checkout on Windows.
+  run('git', ['config', 'core.autocrlf', 'false'], source);
   if (updateTag) {
     run('git', ['checkout', '--detach', updateTag], source);
     const commit = run('git', ['rev-parse', 'HEAD'], source);
