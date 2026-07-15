@@ -53,7 +53,10 @@ try {
       imported[portablePath(relative(source, file))] = sha256(data);
     }
   }
-  if (!updateTag && lock.importedFiles && JSON.stringify(lock.importedFiles) !== JSON.stringify(imported)) throw new Error('locked upstream file hashes differ');
+  const hashChanges = lock.importedFiles ? [...new Set([...Object.keys(lock.importedFiles), ...Object.keys(imported)])]
+    .filter(path => lock.importedFiles[path] !== imported[path])
+    .sort() : [];
+  if (!updateTag && hashChanges.length) throw new Error(`locked upstream file hashes differ: ${hashChanges.join(', ')}`);
   lock = { ...lock, importedFiles: imported };
   const skills = Object.keys(imported).filter(path => path.endsWith('/SKILL.md')).map(path => path.split('/')[1]).sort();
   const parity = { generated: true, upstream: { tag: lock.tag, commit: lock.commit, tree: lock.tree }, skills, cavecrewAgents: Object.keys(imported).filter(path => path.startsWith('agents/')).sort(), mcpShrink: Object.keys(imported).some(path => path.startsWith('src/mcp-servers/caveman-shrink/')), manualReview: ['Review upstream release notes and changed imported hashes before merging.', 'Do not enable MCP shrink automatically.'] };
