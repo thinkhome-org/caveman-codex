@@ -16,4 +16,3 @@
 - [ ] Cross-platform Desktop acceptance evidence.
 - [x] Public remote repository, protected PR flow, and Git marketplace installation.
 - [x] Tagged, attested, and remotely verified GitHub release `v1.0.0`.
-- [ ] Official Plugins Directory submission.
