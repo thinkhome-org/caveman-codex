@@ -4,8 +4,9 @@ import { cp, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 const codex = process.platform === 'win32' ? 'codex.cmd' : 'codex';
+const execute = (args, env) => execFileSync(codex, args, { encoding: 'utf8', env, shell: process.platform === 'win32' });
 const home = await mkdtemp(`${tmpdir()}/caveman-codex-home-`); const env = { ...process.env, CODEX_HOME: home };
-const run = args => execFileSync(codex, args, { encoding: 'utf8', env });
+const run = args => execute(args, env);
 try {
   run(['plugin', 'marketplace', 'add', process.cwd()]);
   assert.match(run(['plugin', 'list']), /caveman/);
@@ -19,7 +20,7 @@ await cp('plugins/caveman', join(personal, '.codex/plugins/caveman'), { recursiv
 await writeFile(join(personal, '.agents/plugins/marketplace.json'), JSON.stringify({ name: 'personal-test', plugins: [{ name: 'caveman', source: { source: 'local', path: './.codex/plugins/caveman' }, policy: { installation: 'AVAILABLE', authentication: 'ON_INSTALL' }, category: 'Productivity' }] }));
 const personalEnv = { ...process.env, HOME: personal, USERPROFILE: personal, CODEX_HOME: join(personal, '.codex') };
 try {
-  assert.match(execFileSync(codex, ['plugin', 'list'], { encoding: 'utf8', env: personalEnv }), /personal-test/);
-  execFileSync(codex, ['plugin', 'add', 'caveman@personal-test'], { env: personalEnv });
-  execFileSync(codex, ['plugin', 'remove', 'caveman@personal-test'], { env: personalEnv });
+  assert.match(execute(['plugin', 'list'], personalEnv), /personal-test/);
+  execute(['plugin', 'add', 'caveman@personal-test'], personalEnv);
+  execute(['plugin', 'remove', 'caveman@personal-test'], personalEnv);
 } finally { await rm(personal, { recursive: true, force: true }); }
