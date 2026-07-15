@@ -1,0 +1,23 @@
+name: Release
+on:
+  push:
+    tags: ['v*.*.*']
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with: { persist-credentials: false }
+      - run: npm ci --ignore-scripts
+      - run: npm test && npm run release:dry-run
+      - uses: actions/attest@f6bf1532d7d6793fce74eac584813a8eee607999
+        with:
+          subject-path: dist/caveman.zip
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with: { name: caveman-release, path: dist/ }
+      - run: gh release create "$GITHUB_REF_NAME" dist/* --draft --generate-notes
+        env: { GH_TOKEN: '${{ github.token }}' }

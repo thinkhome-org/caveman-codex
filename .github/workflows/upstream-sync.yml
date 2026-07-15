@@ -1,0 +1,35 @@
+name: Upstream sync
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with: { fetch-depth: 0, persist-credentials: true }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: { node-version: 20 }
+      - id: version
+        run: |
+          latest=$(git ls-remote --tags https://github.com/JuliusBrussee/caveman.git 'v*' | awk -F/ '{print $3}' | grep -v '{}' | sort -V | tail -1)
+          test -n "$latest"
+          echo "tag=$latest" >> "$GITHUB_OUTPUT"
+      - id: current
+        run: echo "tag=$(node -p \"require('./upstream.lock.json').tag\")" >> "$GITHUB_OUTPUT"
+      - if: steps.version.outputs.tag != steps.current.outputs.tag
+        run: |
+          branch="codex/upstream-${{ steps.version.outputs.tag }}"
+          git switch -c "$branch"
+          node scripts/sync-upstream.mjs --update "${{ steps.version.outputs.tag }}"
+          npm ci --ignore-scripts
+          npm test
+          npm run test:upstream
+          git add upstream.lock.json plugins/caveman
+          git commit -m "chore(upstream): sync caveman ${{ steps.version.outputs.tag }}"
+          git push --set-upstream origin "$branch"
+          gh pr create --draft --base main --title "chore(upstream): sync caveman ${{ steps.version.outputs.tag }}" --body "Automated pinned upstream update. Review generated provenance, parity changes, and release notes before merging."

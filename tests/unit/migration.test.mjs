@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { mkdtemp, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+const project = await mkdtemp(join(tmpdir(), 'caveman-migrate-test-'));
+const legacy = join(project, '.codex-plugins/caveman/.codex-plugin');
+await mkdir(legacy, { recursive: true });
+await writeFile(join(legacy, 'plugin.json'), JSON.stringify({ name: 'caveman', repository: 'https://github.com/yibie/caveman-codex' }));
+const run = args => execFileSync(process.execPath, ['tools/migrate-yibie.mjs', '--project', project, ...args], { encoding: 'utf8' });
+assert.match(run([]), /"dryRun": true/);
+assert.match(run(['--apply']), /removed/);
+const backup = (await readdir(join(project, '.codex-plugins'))).find(name => name.startsWith('caveman.thinkhome-backup-'));
+assert.ok(backup);
+assert.match(await readFile(join(project, '.codex-plugins', backup, '.codex-plugin/plugin.json'), 'utf8'), /yibie/);

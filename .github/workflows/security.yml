@@ -1,0 +1,25 @@
+name: Security
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with: { persist-credentials: false }
+      - run: npm audit --omit=dev
+      - run: git grep -nEI 'BEGIN (RSA|OPENSSH)|sk-[A-Za-z0-9]|gh[pous]_[A-Za-z0-9]' || true
+      - run: npm run verify:licenses && npm run verify:generated
+  codeql:
+    runs-on: ubuntu-latest
+    permissions: { security-events: write, contents: read }
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with: { persist-credentials: false }
+      - uses: github/codeql-action/init@1ad29ea4a422cce9a242a9fae469541dcd08addc
+        with: { languages: javascript }
+      - uses: github/codeql-action/analyze@1ad29ea4a422cce9a242a9fae469541dcd08addc
