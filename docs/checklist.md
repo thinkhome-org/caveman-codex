@@ -8,6 +8,7 @@
 - [x] Minimum (`0.144.2`) and current (`0.144.4`) isolated CLI marketplace evidence.
 - [x] Upstream regression suite (`112/112`) and repository verifier on Node `20.20.2`.
 - [x] Isolated local marketplace install, migration apply/backup, and rollback documentation.
+- [x] Isolated project and personal local-marketplace install/remove flows.
 - [x] CI, synchronization, release automation, and static security gates.
 - [ ] Documentation and cross-platform Desktop acceptance evidence.
 - [ ] Approval-gated remote repository, PR, public visibility, and release.
