@@ -2,7 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { cp, lstat, mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
-import { files, hashTree, json, replace, root, sha256, writeJson } from './lib.mjs';
+import { files, hashTree, json, portablePath, replace, root, sha256, writeJson } from './lib.mjs';
 
 const check = process.argv.includes('--check');
 const updateAt = process.argv.indexOf('--update');
@@ -50,7 +50,7 @@ try {
       const data = await readFile(file);
       if ((await stat(file)).mode & 0o111) throw new Error(`unexpected executable source file: ${relative(source, file)}`);
       try { new TextDecoder('utf-8', { fatal: true }).decode(data); } catch { throw new Error(`unexpected non-text source file: ${relative(source, file)}`); }
-      imported[relative(source, file)] = sha256(data);
+      imported[portablePath(relative(source, file))] = sha256(data);
     }
   }
   if (!updateTag && lock.importedFiles && JSON.stringify(lock.importedFiles) !== JSON.stringify(imported)) throw new Error('locked upstream file hashes differ');
