@@ -16,9 +16,9 @@ Latest stable tag is `v1.9.1`, resolved commit `0d95a81d35a9f2d123a5e9430d1cfc43
 
 Node standard library only. No runtime network access. Native `codex plugin` remains the installer and uninstaller.
 
-## 2026-07-15 — upstream regression caveat
+## 2026-07-15 — upstream regression runtime
 
-The pinned upstream suite has 110 passing and 2 failing tests under local Node `26.4.0`; both failures are upstream uninstall assertions in `tests/installer/e2e.freshinstall.test.mjs`. ThinkHome does not alter upstream code. CI pins Node 20 to establish the supported regression baseline; the result must be reviewed before release.
+The upstream installer suite has 2 uninstall failures under local Node `26.4.0`, but passes 112/112 under Node `20.20.2`. The regression runner pins Node `20.20.2` through `npx` so local and CI results use the supported baseline. ThinkHome does not alter upstream code.
 
 ## 2026-07-15 — import fail-closed checks
 
