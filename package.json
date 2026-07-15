@@ -1,0 +1,19 @@
+{
+  "name": "@thinkhome/caveman-codex",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/sync-upstream.mjs",
+    "verify:generated": "node scripts/verify-generated.mjs",
+    "verify:licenses": "node scripts/verify-licenses.mjs",
+    "verify:plugin": "node scripts/verify-plugin.mjs",
+    "test:unit": "node --test tests/unit/*.test.mjs",
+    "test:integration": "node --test tests/integration/*.test.mjs",
+    "test:e2e": "node --test tests/e2e/*.test.mjs",
+    "test:upstream": "node scripts/test-upstream.mjs",
+    "test": "npm run verify:generated && npm run verify:licenses && npm run verify:plugin && npm run test:unit && npm run test:integration && npm run test:e2e",
+    "release:dry-run": "node scripts/release-dry-run.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

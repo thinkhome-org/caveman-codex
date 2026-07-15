@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import { mkdtemp, readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
+const data = await mkdtemp(join(tmpdir(), 'caveman-hook-test-'));
+const hook = join(process.cwd(), 'plugins/caveman/hooks/caveman-hook.mjs');
+const run = input => spawnSync(process.execPath, [hook], { input: JSON.stringify(input), encoding: 'utf8', env: { ...process.env, PLUGIN_DATA: data } });
+assert.match(run({ hook_event_name: 'SessionStart' }).stdout, /Caveman full mode/);
+assert.match(run({ hook_event_name: 'UserPromptSubmit', prompt: '$caveman ultra' }).stdout, /Caveman ultra mode/);
+assert.equal(JSON.parse(await readFile(join(data, 'state.json'))).mode, 'ultra');
+assert.match(run({ hook_event_name: 'UserPromptSubmit', prompt: 'normal mode' }).stdout, /^$/);
+assert.equal(run({ hook_event_name: 'SessionStart', prompt: '\u0000bad' }).stdout, '');

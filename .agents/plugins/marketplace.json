@@ -1,0 +1,10 @@
+{
+  "name": "thinkhome-caveman",
+  "interface": { "displayName": "ThinkHome Caveman" },
+  "plugins": [{
+    "name": "caveman",
+    "source": { "source": "local", "path": "./plugins/caveman" },
+    "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+    "category": "Productivity"
+  }]
+}
