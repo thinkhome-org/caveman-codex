@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { cp, lstat, mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { cp, lstat, mkdir, mkdtemp, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { files, hashTree, json, portablePath, replace, root, sha256, writeJson } from './lib.mjs';
@@ -36,22 +36,24 @@ try {
   await cp(join(root, 'tools/migrate-yibie.mjs'), join(stage, 'tools/migrate-yibie.mjs'));
   await cp(join(root, 'integration/codex/caveman-init'), join(stage, 'skills/caveman-init'), { recursive: true });
   await cp(join(root, 'integration/codex/caveman-migrate'), join(stage, 'skills/caveman-migrate'), { recursive: true });
-  for (const path of lock.paths) {
-    const from = join(source, path);
-    if ((await lstat(from)).isSymbolicLink()) throw new Error(`refusing symlinked source path: ${path}`);
-    const to = path === 'LICENSE' ? join(stage, 'UPSTREAM_LICENSE') : path.startsWith('skills/') ? join(stage, path) : path.startsWith('plugins/caveman/') ? join(stage, path.slice('plugins/caveman/'.length)) : join(stage, 'upstream', path);
-    await cp(from, to, { recursive: true });
-  }
   const imported = {};
   for (const path of lock.paths) {
     const from = join(source, path);
     const inputs = (await stat(from)).isDirectory() ? await files(from) : [from];
     for (const file of inputs) {
-      const data = await readFile(file);
+      const sourcePath = portablePath(relative(source, file));
+      const data = execFileSync('git', ['show', `${lock.commit}:${sourcePath}`], { cwd: source });
+      await writeFile(file, data);
       if ((await stat(file)).mode & 0o111) throw new Error(`unexpected executable source file: ${relative(source, file)}`);
       try { new TextDecoder('utf-8', { fatal: true }).decode(data); } catch { throw new Error(`unexpected non-text source file: ${relative(source, file)}`); }
-      imported[portablePath(relative(source, file))] = sha256(data);
+      imported[sourcePath] = sha256(data);
     }
+  }
+  for (const path of lock.paths) {
+    const from = join(source, path);
+    if ((await lstat(from)).isSymbolicLink()) throw new Error(`refusing symlinked source path: ${path}`);
+    const to = path === 'LICENSE' ? join(stage, 'UPSTREAM_LICENSE') : path.startsWith('skills/') ? join(stage, path) : path.startsWith('plugins/caveman/') ? join(stage, path.slice('plugins/caveman/'.length)) : join(stage, 'upstream', path);
+    await cp(from, to, { recursive: true });
   }
   const hashChanges = lock.importedFiles ? [...new Set([...Object.keys(lock.importedFiles), ...Object.keys(imported)])]
     .filter(path => lock.importedFiles[path] !== imported[path])
