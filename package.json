@@ -2,6 +2,7 @@
   "name": "@thinkhome/caveman-codex",
   "private": true,
   "version": "1.0.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "node scripts/sync-upstream.mjs",
