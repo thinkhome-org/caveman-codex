@@ -21,4 +21,5 @@ jobs:
       - run: npm install --global @openai/codex@${{ matrix.codex }}
       - run: npm test
       - run: npm run test:upstream
+        if: runner.os != 'Windows'
         continue-on-error: false

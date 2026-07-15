@@ -20,6 +20,8 @@ Node standard library only. No runtime network access. Native `codex plugin` rem
 
 The upstream installer suite has 2 uninstall failures under local Node `26.4.0`, but passes 112/112 under Node `20.20.2`. The regression runner pins Node `20.20.2` through `npx` so local and CI results use the supported baseline. ThinkHome does not alter upstream code.
 
+On Windows, upstream v1.9.1 has additional path-separator-sensitive installer-test failures. ThinkHome still runs its generated-plugin, installation, and marketplace tests on Windows; the unmodified upstream suite runs on Linux and macOS, where it passes.
+
 ## 2026-07-15 — import fail-closed checks
 
 The lock records every imported SHA-256. The generator rejects source symlinks, executable files, invalid UTF-8, missing paths, changed locked hashes, and rewritten tags. It emits `PARITY.json` and `PARITY.md` in the generated plugin for automated and human review.
