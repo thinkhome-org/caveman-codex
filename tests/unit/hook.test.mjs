@@ -9,5 +9,6 @@ const run = input => spawnSync(process.execPath, [hook], { input: JSON.stringify
 assert.match(run({ hook_event_name: 'SessionStart' }).stdout, /Caveman full mode/);
 assert.match(run({ hook_event_name: 'UserPromptSubmit', prompt: '$caveman ultra' }).stdout, /Caveman ultra mode/);
 assert.equal(JSON.parse(await readFile(join(data, 'state.json'))).mode, 'ultra');
+assert.match(run({ hook_event_name: 'UserPromptSubmit', prompt: '$caveman-stats' }).stdout, /Exact Caveman stats unavailable/);
 assert.match(run({ hook_event_name: 'UserPromptSubmit', prompt: 'normal mode' }).stdout, /^$/);
 assert.equal(run({ hook_event_name: 'SessionStart', prompt: '\u0000bad' }).stdout, '');

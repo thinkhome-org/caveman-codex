@@ -19,3 +19,11 @@ Node standard library only. No runtime network access. Native `codex plugin` rem
 ## 2026-07-15 — upstream regression caveat
 
 The pinned upstream suite has 110 passing and 2 failing tests under local Node `26.4.0`; both failures are upstream uninstall assertions in `tests/installer/e2e.freshinstall.test.mjs`. ThinkHome does not alter upstream code. CI pins Node 20 to establish the supported regression baseline; the result must be reviewed before release.
+
+## 2026-07-15 — import fail-closed checks
+
+The lock records every imported SHA-256. The generator rejects source symlinks, executable files, invalid UTF-8, missing paths, changed locked hashes, and rewritten tags. It emits `PARITY.json` and `PARITY.md` in the generated plugin for automated and human review.
+
+## 2026-07-15 — stats fallback
+
+Observed current Codex transcript envelopes contain no supported token-usage counters. `$caveman-stats` therefore explicitly reports exact stats unavailable; it never estimates. A future documented schema requires fixtures before support is added.

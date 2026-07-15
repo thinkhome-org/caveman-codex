@@ -27,11 +27,15 @@ async function configuredMode() {
 try {
   const input = await stdin(); const dir = await stateDir(); let mode = await readState(dir) || await configuredMode();
   const prompt = typeof input.prompt === 'string' ? input.prompt : typeof input.user_prompt === 'string' ? input.user_prompt : '';
+  let stats = false;
   if (!control.test(prompt)) {
-    const match = prompt.match(/(?:^|\s)\$?caveman\s+(lite|full|ultra|wenyan-lite|wenyan-full|wenyan-ultra|off)(?:\s|$)/i);
-    if (match) mode = match[1].toLowerCase();
-    if (/\b(?:stop caveman|normal mode)\b/i.test(prompt)) mode = 'off';
-    if (input.hook_event_name === 'UserPromptSubmit' && (match || mode === 'off')) await writeState(dir, mode);
+    const match = prompt.match(/(?:^|\s)\$?caveman(?!-)(?:\s+(lite|full|ultra|wenyan-lite|wenyan-full|wenyan-ultra|off))?(?:\s+mode)?(?:\s|$)/i);
+    let changed = false;
+    if (match) { mode = (match[1] || 'full').toLowerCase(); changed = true; }
+    if (/\b(?:stop caveman|normal mode)\b/i.test(prompt)) { mode = 'off'; changed = true; }
+    stats = /(?:^|\s)\$?caveman-stats(?:\s|$)/i.test(prompt);
+    if (input.hook_event_name === 'UserPromptSubmit' && changed) await writeState(dir, mode);
   }
-  if (mode !== 'off') process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: input.hook_event_name || 'SessionStart', additionalContext: `Caveman ${mode} mode is active. Follow the $caveman skill; use normal clarity for security, destructive, or ambiguous instructions.` } }));
+  const context = stats ? 'Exact Caveman stats unavailable: this Codex transcript schema has no supported usage counters. Do not estimate or fabricate token usage or savings.' : mode !== 'off' ? `Caveman ${mode} mode is active. Follow the $caveman skill; use normal clarity for security, destructive, or ambiguous instructions.` : '';
+  if (context) process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: input.hook_event_name || 'SessionStart', additionalContext: context } }));
 } catch (error) { fail(`Caveman hook unavailable: ${error.message}. Use $caveman manually.`); }

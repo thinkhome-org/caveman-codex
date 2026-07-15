@@ -41,8 +41,10 @@
   },
   "generatedFiles": {
     ".codex-plugin/plugin.json": "8e244966f6ace89bea18efe4e7231e15f372df61e5d2999bb94f19330bd17839",
+    "PARITY.json": "dfa05c9364afb54679c6cb7bcd697aca1a25e90d3426712e85c2d9eb0c558c37",
+    "PARITY.md": "57eacd8c83776c4f2cd5c732f9b93dd1de9e15a23e44d08b473e59bb365cdf6c",
     "UPSTREAM_LICENSE": "5eb826cd03151bcc7cce3f80d40e87733237fedfc6c36d6908aca5fd650a0bdb",
-    "hooks/caveman-hook.mjs": "66f17b65a291a1845dbfd69543115f53eb656161e0273742ca68fc391f90dca4",
+    "hooks/caveman-hook.mjs": "dc87d81c720ced4c2310898a3cfb5780a449258aff2f2d6f5dfd0d0ec59d5fef",
     "hooks/hooks.json": "27a0b6dbbf753e3193a13c83afd8bb3e33c7fef053429692c610c691bba1fc1d",
     "skills/cavecrew/README.md": "e13d08785f72d305de1ac1fa9a49c349332bb4e2f6a24a06efd20144c36c4dc9",
     "skills/cavecrew/SKILL.md": "b74f374f6aae6e9a31e78e7d876860406fe5833378e9298536edf176c12f379b",

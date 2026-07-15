@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with: { fetch-depth: 0, persist-credentials: true }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: { node-version: 20 }
       - id: version
         run: |
           latest=$(git ls-remote --tags https://github.com/JuliusBrussee/caveman.git 'v*' | awk -F/ '{print $3}' | grep -v '{}' | sort -V | tail -1)
@@ -24,7 +26,9 @@ jobs:
           branch="codex/upstream-v${{ steps.version.outputs.tag }}"
           git switch -c "$branch"
           node scripts/sync-upstream.mjs --update "${{ steps.version.outputs.tag }}"
+          npm ci --ignore-scripts
           npm test
+          npm run test:upstream
           git add upstream.lock.json plugins/caveman
           git commit -m "chore(upstream): sync caveman ${{ steps.version.outputs.tag }}"
           git push --set-upstream origin "$branch"
