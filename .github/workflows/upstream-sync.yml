@@ -23,7 +23,7 @@ jobs:
         run: echo "tag=$(node -p \"require('./upstream.lock.json').tag\")" >> "$GITHUB_OUTPUT"
       - if: steps.version.outputs.tag != steps.current.outputs.tag
         run: |
-          branch="codex/upstream-v${{ steps.version.outputs.tag }}"
+          branch="codex/upstream-${{ steps.version.outputs.tag }}"
           git switch -c "$branch"
           node scripts/sync-upstream.mjs --update "${{ steps.version.outputs.tag }}"
           npm ci --ignore-scripts
