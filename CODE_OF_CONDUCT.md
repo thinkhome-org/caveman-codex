@@ -1,7 +1,9 @@
 # Code of Conduct
 
-Be respectful, constructive, and welcoming. Harassment, discrimination, personal attacks, and publishing another person's private information are not acceptable.
+Everyone is welcome to participate. Be respectful, constructive, and considerate of different backgrounds and levels of experience.
 
-Open an issue for ordinary project questions, bugs, and feature requests. For a sensitive conduct concern, contact a ThinkHome maintainer privately instead of posting personal details publicly.
+Harassment, discrimination, threats, personal attacks, spam, and publishing another person's private information are not acceptable.
 
-Maintainers may edit or remove inappropriate content and temporarily or permanently restrict participation when needed to keep the community safe.
+Use [GitHub Issues](https://github.com/thinkhome-org/caveman-codex/issues/new/choose) normally for questions, bugs, feature requests, and project discussion. Do not put private information or security vulnerabilities in a public issue; report vulnerabilities through [GitHub Security Advisories](https://github.com/thinkhome-org/caveman-codex/security/advisories/new).
+
+Maintainers may edit or remove content and temporarily or permanently restrict participation when necessary to keep the community safe. Serious abuse can also be reported through GitHub's built-in content-reporting tools.
