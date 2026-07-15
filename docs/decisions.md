@@ -24,6 +24,8 @@ The upstream installer suite has 2 uninstall failures under local Node `26.4.0`,
 
 The lock records every imported SHA-256. The generator rejects source symlinks, executable files, invalid UTF-8, missing paths, changed locked hashes, and rewritten tags. It emits `PARITY.json` and `PARITY.md` in the generated plugin for automated and human review.
 
+Repeated synchronization of the already-pinned tag is an explicit no-op, including the lock timestamp; integration tests enforce this.
+
 ## 2026-07-15 — stats fallback
 
 Observed current Codex transcript envelopes contain no supported token-usage counters. `$caveman-stats` therefore explicitly reports exact stats unavailable; it never estimates. A future documented schema requires fixtures before support is added.

@@ -4,6 +4,7 @@
 - [x] Local governance and attribution baseline.
 - [x] Deterministic import and provenance.
 - [x] Lock-file hashes, parity report, and fail-closed source checks.
+- [x] Repeated current-tag synchronization is byte-identical.
 - [x] Native Codex plugin, skills, hooks, and state.
 - [x] Minimum (`0.144.2`) and current (`0.144.4`) isolated CLI marketplace evidence.
 - [x] Upstream regression suite (`112/112`) and repository verifier on Node `20.20.2`.

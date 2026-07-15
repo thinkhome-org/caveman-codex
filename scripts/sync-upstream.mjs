@@ -20,7 +20,7 @@ try {
     run('git', ['checkout', '--detach', updateTag], source);
     const commit = run('git', ['rev-parse', 'HEAD'], source);
     if (updateTag === lock.tag && commit !== lock.commit) throw new Error('refusing rewritten upstream tag');
-    lock = { ...lock, tag: updateTag, commit, tree: run('git', ['rev-parse', 'HEAD^{tree}'], source), synchronizedAt: new Date().toISOString() };
+    if (updateTag !== lock.tag) lock = { ...lock, tag: updateTag, commit, tree: run('git', ['rev-parse', 'HEAD^{tree}'], source), synchronizedAt: new Date().toISOString() };
   } else run('git', ['checkout', '--detach', lock.commit], source);
   if (run('git', ['rev-parse', 'HEAD'], source) !== lock.commit) throw new Error('upstream commit mismatch');
   if (run('git', ['rev-parse', 'HEAD^{tree}'], source) !== lock.tree) throw new Error('upstream tree mismatch');
